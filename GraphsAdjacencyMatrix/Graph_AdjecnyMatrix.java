@@ -1,6 +1,6 @@
 package trees.GraphsAdjacencyMatrix;
 
-import trees.GraphNode;
+import trees.TreeWeightedGraphNode;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -8,10 +8,10 @@ import java.util.Queue;
 
 public class Graph_AdjecnyMatrix {
 
-    ArrayList<GraphNode>  nodeList = new ArrayList<>() ;
+    ArrayList<TreeWeightedGraphNode>  nodeList = new ArrayList<>() ;
     int[][] adjacencyMatrx ;
 
-    public Graph_AdjecnyMatrix(ArrayList<GraphNode> nodeList) {
+    public Graph_AdjecnyMatrix(ArrayList<TreeWeightedGraphNode> nodeList) {
         this.nodeList = nodeList;
         this.adjacencyMatrx = new int[nodeList.size()][nodeList.size()];
     }
@@ -44,10 +44,10 @@ public class Graph_AdjecnyMatrix {
     }
 
 
-    public ArrayList<GraphNode> getchildren(GraphNode node)
+    public ArrayList<TreeWeightedGraphNode> getchildren(TreeWeightedGraphNode node)
     {
 
-        ArrayList<GraphNode> children = new ArrayList<>();
+        ArrayList<TreeWeightedGraphNode> children = new ArrayList<>();
         int nodeIndex = node.index ;
 
         for( int i = 0 ; i < adjacencyMatrx[nodeIndex].length ; i++)
@@ -67,27 +67,27 @@ public class Graph_AdjecnyMatrix {
 
 
 
-    public void  BFS(GraphNode node)
+    public void  BFS(TreeWeightedGraphNode node)
     {
 
-        Queue<GraphNode> queue = new LinkedList<>() ;
+        Queue<TreeWeightedGraphNode> queue = new LinkedList<>() ;
 
 
-            ArrayList<GraphNode> children = getchildren(node);
+            ArrayList<TreeWeightedGraphNode> children = getchildren(node);
 
 
            queue.add( node) ;
 
            while( ! queue.isEmpty())
            {
-               GraphNode current = queue.remove() ;
+               TreeWeightedGraphNode current = queue.remove() ;
 
 
                System.out.print(  current.data + "->");
 
                current.isVisited = true ;
 
-               for( GraphNode tempNode : children)
+               for( TreeWeightedGraphNode tempNode : children)
                {
                    if( !tempNode.isVisited)
                    {
@@ -109,7 +109,7 @@ public class Graph_AdjecnyMatrix {
 
     public void BFSCaller( )
     {
-        for( GraphNode tempNode : nodeList)
+        for( TreeWeightedGraphNode tempNode : nodeList)
         {
            // System.out.println(tempNode.data);
             if( !tempNode.isVisited)

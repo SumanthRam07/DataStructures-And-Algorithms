@@ -1,6 +1,6 @@
 package trees.Graphs_AdjencyList;
 
-import trees.GraphNode;
+import trees.TreeWeightedGraphNode;
 
 
 import java.util.ArrayList;
@@ -11,13 +11,13 @@ public class Graph_Main {
     public static void main(String[] args) {
 
 
-        ArrayList<GraphNode> nodeList = new ArrayList<>();
+        ArrayList<TreeWeightedGraphNode> nodeList = new ArrayList<>();
 
-        nodeList.add(new GraphNode(0,"A")) ;
-        nodeList.add(new GraphNode(1, "B"));
-        nodeList.add(new GraphNode(2, "C"));
-        nodeList.add(new GraphNode(3, "D"));
-        nodeList.add(new GraphNode(4, "E"));
+        nodeList.add(new TreeWeightedGraphNode(0,"A")) ;
+        nodeList.add(new TreeWeightedGraphNode(1, "B"));
+        nodeList.add(new TreeWeightedGraphNode(2, "C"));
+        nodeList.add(new TreeWeightedGraphNode(3, "D"));
+        nodeList.add(new TreeWeightedGraphNode(4, "E"));
 
 
         Graph_AdjecnyList adjecnyList = new Graph_AdjecnyList(nodeList);
@@ -29,6 +29,10 @@ public class Graph_Main {
         adjecnyList.insert(1, 4);
         adjecnyList.insert(2, 3);
         adjecnyList.insert(3, 4);
+
+
+
+
 
 
         adjecnyList.DFS() ;

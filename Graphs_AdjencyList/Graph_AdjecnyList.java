@@ -1,6 +1,6 @@
 package trees.Graphs_AdjencyList;
 
-import trees.GraphNode;
+import trees.TreeWeightedGraphNode;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -10,10 +10,10 @@ import java.util.Stack;
 public class Graph_AdjecnyList {
 
 
-    ArrayList<GraphNode> nodeList = new ArrayList<>();
-    ArrayList<GraphNode> adjency_list;
+    ArrayList<TreeWeightedGraphNode> nodeList = new ArrayList<>();
+    ArrayList<TreeWeightedGraphNode> adjency_list;
 
-    public Graph_AdjecnyList(ArrayList<GraphNode> nodeList) {
+    public Graph_AdjecnyList(ArrayList<TreeWeightedGraphNode> nodeList) {
         this.nodeList = nodeList;
         this.adjency_list = new ArrayList<>();
     }
@@ -21,8 +21,8 @@ public class Graph_AdjecnyList {
 
     public void insert(int i, int j) {
 
-        GraphNode temp1 = nodeList.get(i);
-        GraphNode temp2 = nodeList.get(j);
+        TreeWeightedGraphNode temp1 = nodeList.get(i);
+        TreeWeightedGraphNode temp2 = nodeList.get(j);
 
          temp1.children.add(temp2) ;
          temp2.children.add(temp1) ;
@@ -33,11 +33,11 @@ public class Graph_AdjecnyList {
     {
         for( int i = 0 ; i < nodeList.size() ; i++)
         {
-             GraphNode temp = nodeList.get(i) ;
+             TreeWeightedGraphNode temp = nodeList.get(i) ;
 
              System.out.print( temp.data + ": ") ;
 
-             for( GraphNode temp1 : temp.children)
+             for( TreeWeightedGraphNode temp1 : temp.children)
              {
                  System.out.print( temp1.data + "->");
              }
@@ -53,23 +53,23 @@ public class Graph_AdjecnyList {
     public void BFS()
     {
 
-        for( GraphNode  node :  nodeList)
+        for( TreeWeightedGraphNode node :  nodeList)
         {
             if( !node.isVisited )
             {
 
-                Queue<GraphNode> q = new LinkedList<>() ;
+                Queue<TreeWeightedGraphNode> q = new LinkedList<>() ;
 
                 q.add(node) ;
 
                 while (!q.isEmpty())
                 {
-                    GraphNode temp = q.remove() ;
+                    TreeWeightedGraphNode temp = q.remove() ;
                     temp.isVisited=true;
 
                     System.out.print( temp.data + "->") ;
 
-                    for( GraphNode temp1 : temp.children)
+                    for( TreeWeightedGraphNode temp1 : temp.children)
                     {
                         if( ! temp1.isVisited)  q.add(temp1) ;
                         temp1.isVisited=true ;
@@ -99,23 +99,23 @@ public class Graph_AdjecnyList {
 
     public void DFS( )
     {
-        for( GraphNode node : nodeList)
+        for( TreeWeightedGraphNode node : nodeList)
         {
             if( ! node.isVisited)
             {
 
-                Stack<GraphNode> stack = new Stack<>() ;
+                Stack<TreeWeightedGraphNode> stack = new Stack<>() ;
                 stack.add(node) ;
 
                 while(! stack .isEmpty())
                 {
-                    GraphNode temp = stack.pop() ;
+                    TreeWeightedGraphNode temp = stack.pop() ;
 
                     System.out.print( temp.data + "->");
 
                     temp.isVisited = true;
 
-                    for( GraphNode child : temp.children)
+                    for( TreeWeightedGraphNode child : temp.children)
                     {
 
                         if( ! child.isVisited)
@@ -155,6 +155,132 @@ public class Graph_AdjecnyList {
 
 
     }
+
+
+    public void addDirectedEdge( int i , int j)
+    {
+        TreeWeightedGraphNode temp1 = nodeList.get(i) ;
+        TreeWeightedGraphNode temp2 = nodeList.get(j) ;
+
+        temp1.children.add(temp2) ;
+
+    }
+
+
+
+    public  void TopologicalSort(TreeWeightedGraphNode node , Stack<TreeWeightedGraphNode> stack)
+    {
+        System.out.println(node.data);
+        for( TreeWeightedGraphNode neighbour : node.children)
+        {
+            if( !neighbour.isVisited)
+            {
+
+                TopologicalSort( neighbour ,stack) ;
+
+            }
+
+
+        }
+
+        node.isVisited = true ;
+        stack.add(node) ;
+
+
+
+    }
+
+
+
+    public void TopologicalStarterFunction()
+    {
+        Stack<TreeWeightedGraphNode> stack = new Stack<>();
+        for( TreeWeightedGraphNode temp : nodeList)
+        {
+
+            if( ! temp.isVisited)
+            {
+                TopologicalSort(temp,stack);
+
+            }
+
+        }
+
+
+        while( ! stack.isEmpty())
+        {
+            System.out.print(stack.pop().data + "->");
+        }
+
+
+    }
+
+    public void printPath(TreeWeightedGraphNode node)
+    {
+        if( node.parent != null)
+        {
+           printPath(node.parent);
+        }
+
+        System.out.print(node.data + " ");
+    }
+
+    public void  SingleSourceShortestPath(TreeWeightedGraphNode node )
+    {
+
+        Queue<TreeWeightedGraphNode> queue = new LinkedList<>() ;
+
+        queue.add(node) ;
+
+        while ( ! queue.isEmpty())
+        {
+
+            TreeWeightedGraphNode temp = queue.remove() ;
+
+                  System.out.print(temp.data + " :");
+
+                  temp.isVisited = true ;
+                  printPath(temp) ;
+
+            System.out.println();
+
+
+
+
+            for(TreeWeightedGraphNode temp1 : temp.children)
+            {
+                if( !temp1.isVisited)
+                {
+                    queue.add(temp1) ;
+                    temp1.parent= temp ;
+                    temp1.isVisited = true ;
+                }
+
+
+            }
+
+
+
+
+
+        }
+
+
+    }
+
+
+    public  void SSSPHelperFunction()
+    {
+        for( TreeWeightedGraphNode temp : nodeList)
+        {
+            if( !temp.isVisited)
+            {
+                SingleSourceShortestPath(temp);
+            }
+        }
+    }
+
+
 
 
 
